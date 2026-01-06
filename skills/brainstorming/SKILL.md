@@ -1,54 +1,104 @@
 ---
 name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+description: "Use before any creative work - creating features, building components, adding functionality. Analyzes codebase, creates design draft, then asks all questions at once."
 ---
 
 # Brainstorming Ideas Into Designs
 
 ## Overview
 
-Help turn ideas into fully formed designs and specs through natural collaborative dialogue.
-
-Start by understanding the current project context, then ask questions one at a time to refine the idea. Once you understand what you're building, present the design in small sections (200-300 words), checking after each section whether it looks right so far.
+Turn ideas into design documents with minimal back-and-forth. Analyze first, ask questions once, then implement.
 
 ## The Process
 
-**Understanding the idea:**
+### Step 1: Analyze (silent)
 
-- Check out the current project state first (files, docs, recent commits)
-- Ask questions one at a time to refine the idea
-- Prefer multiple choice questions when possible, but open-ended is fine too
-- Only one question per message - if a topic needs more exploration, break it into multiple questions
-- Focus on understanding: purpose, constraints, success criteria
+**DO NOT ask questions yet.** First, gather context:
 
-**Exploring approaches:**
+- Read relevant files, docs, recent commits
+- Understand existing patterns and architecture
+- Identify constraints and dependencies
+- Form your own opinion about the best approach
 
-- Propose 2-3 different approaches with trade-offs
-- Present options conversationally with your recommendation and reasoning
-- Lead with your recommended option and explain why
+### Step 2: Create Draft Design Document
 
-**Presenting the design:**
+Write a complete design document based on your analysis:
 
-- Once you believe you understand what you're building, present the design
-- Break it into sections of 200-300 words
-- Ask after each section whether it looks right so far
-- Cover: architecture, components, data flow, error handling, testing
-- Be ready to go back and clarify if something doesn't make sense
+```markdown
+# [Feature] Design
+
+## Goal
+[What we're building and why]
+
+## Approach
+[Your recommended approach with reasoning]
+
+## Architecture
+[Components, data flow, integration points]
+
+## Implementation Notes
+[Key files to modify, patterns to follow]
+
+## Testing Strategy
+[How to verify it works]
+
+## Open Questions
+[Things you're uncertain about - these become your questions]
+```
+
+Save to: `docs/plans/YYYY-MM-DD-<topic>-design.md`
+
+### Step 3: Single Checkpoint
+
+Present everything at once:
+
+```
+Design document ready: docs/plans/YYYY-MM-DD-<topic>-design.md
+
+[Brief summary of approach - 2-3 sentences]
+
+Questions before proceeding:
+1. [Question from Open Questions]
+2. [Question from Open Questions]
+3. [Question from Open Questions]
+
+Options:
+• "go" - Implement as designed
+• "q1: answer, q2: answer" - Answer questions, then implement
+• "edit" - I'll modify the design doc, then continue
+```
+
+**Wait for user response. One checkpoint, not five.**
+
+### Step 4: Finalize
+
+Based on response:
+- **"go"** → Commit doc, proceed to next workflow phase
+- **Answers provided** → Update doc with answers, commit, proceed
+- **"edit"** → Wait for user to edit, then commit and proceed
 
 ## Output
 
 **Required deliverable:**
-
-- Design document at `docs/plans/YYYY-MM-DD-<topic>-design.md` (relative to current working directory)
-- Commit the document to git
+- Design document at `docs/plans/YYYY-MM-DD-<topic>-design.md`
+- Committed to git
 
 **When done:** Report the document path. The workflow orchestrator handles what comes next.
 
 ## Key Principles
 
-- **One question at a time** - Don't overwhelm with multiple questions
-- **Multiple choice preferred** - Easier to answer than open-ended when possible
-- **YAGNI ruthlessly** - Remove unnecessary features from all designs
-- **Explore alternatives** - Always propose 2-3 approaches before settling
-- **Incremental validation** - Present design in sections, validate each
-- **Be flexible** - Go back and clarify when something doesn't make sense
+- **Draft first, ask later** - Form your own opinion before asking
+- **All questions at once** - No back-and-forth, one checkpoint
+- **YAGNI ruthlessly** - Remove unnecessary features from designs
+- **Sensible defaults** - If you can make a reasonable choice, make it
+- **Open Questions section** - Put uncertainties there, not inline interruptions
+
+## Anti-Patterns
+
+| Old Way (don't do) | New Way |
+|-------------------|---------|
+| "What's the scope?" | Analyze codebase, propose scope |
+| "Should we use X or Y?" | Pick one, explain why, add to Open Questions if uncertain |
+| "Here's section 1, ok?" | Write full doc, one checkpoint at end |
+| "What about edge case Z?" | Handle it in design or add to Open Questions |
+| 5 questions over 5 messages | All questions in one message |
