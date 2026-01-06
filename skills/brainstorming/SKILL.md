@@ -32,17 +32,13 @@ Start by understanding the current project context, then ask questions one at a 
 - Cover: architecture, components, data flow, error handling, testing
 - Be ready to go back and clarify if something doesn't make sense
 
-## After the Design
+## Output
 
-**Documentation:**
-- Write the validated design to `docs/plans/YYYY-MM-DD-<topic>-design.md`
-- Use elements-of-style:writing-clearly-and-concisely skill if available
-- Commit the design document to git
+**Required deliverable:**
+- Design document at `docs/plans/YYYY-MM-DD-<topic>-design.md`
+- Commit the document to git
 
-**Implementation (if continuing):**
-- Ask: "Ready to set up for implementation?"
-- Use superpowers:using-git-worktrees to create isolated workspace
-- Use superpowers:writing-plans to create detailed implementation plan
+**When done:** Report the document path. The workflow orchestrator handles what comes next.
 
 ## Key Principles
 

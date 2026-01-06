@@ -190,11 +190,8 @@ git worktree remove <worktree-path>
 - Get typed confirmation for Option 4
 - Clean up worktree for Options 1 & 4 only
 
-## Integration
+## Output
 
-**Called by:**
-- **subagent-driven-development** (Step 7) - After all tasks complete
-- **executing-plans** (Step 5) - After all batches complete
+Report which option was executed and the result (merged, PR URL, kept, discarded).
 
-**Pairs with:**
-- **using-git-worktrees** - Cleans up worktree created by that skill
+The workflow orchestrator handles what comes next.
