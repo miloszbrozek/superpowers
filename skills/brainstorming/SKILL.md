@@ -14,6 +14,7 @@ Start by understanding the current project context, then ask questions one at a 
 ## The Process
 
 **Understanding the idea:**
+
 - Check out the current project state first (files, docs, recent commits)
 - Ask questions one at a time to refine the idea
 - Prefer multiple choice questions when possible, but open-ended is fine too
@@ -21,28 +22,27 @@ Start by understanding the current project context, then ask questions one at a 
 - Focus on understanding: purpose, constraints, success criteria
 
 **Exploring approaches:**
+
 - Propose 2-3 different approaches with trade-offs
 - Present options conversationally with your recommendation and reasoning
 - Lead with your recommended option and explain why
 
 **Presenting the design:**
+
 - Once you believe you understand what you're building, present the design
 - Break it into sections of 200-300 words
 - Ask after each section whether it looks right so far
 - Cover: architecture, components, data flow, error handling, testing
 - Be ready to go back and clarify if something doesn't make sense
 
-## After the Design
+## Output
 
-**Documentation:**
-- Write the validated design to `docs/plans/YYYY-MM-DD-<topic>-design.md`
-- Use elements-of-style:writing-clearly-and-concisely skill if available
-- Commit the design document to git
+**Required deliverable:**
 
-**Implementation (if continuing):**
-- Ask: "Ready to set up for implementation?"
-- Use superpowers:using-git-worktrees to create isolated workspace
-- Use superpowers:writing-plans to create detailed implementation plan
+- Design document at `docs/plans/YYYY-MM-DD-<topic>-design.md` (relative to current working directory)
+- Commit the document to git
+
+**When done:** Report the document path. The workflow orchestrator handles what comes next.
 
 ## Key Principles
 

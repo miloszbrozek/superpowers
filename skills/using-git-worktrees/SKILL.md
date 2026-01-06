@@ -206,12 +206,14 @@ Ready to implement auth feature
 - Auto-detect and run project setup
 - Verify clean test baseline
 
-## Integration
+## Output
 
-**Called by:**
-- **brainstorming** (Phase 4) - REQUIRED when design is approved and implementation follows
-- Any skill needing isolated workspace
+**After completing this skill, you are in the worktree directory.** All subsequent work happens there.
 
-**Pairs with:**
-- **finishing-a-development-branch** - REQUIRED for cleanup after work complete
-- **executing-plans** or **subagent-driven-development** - Work happens in this worktree
+Report:
+- Worktree path (full absolute path)
+- Test results (N passing, 0 failures)
+- Ready status
+- Confirm: "Working directory is now `<path>`"
+
+The workflow orchestrator handles what comes next.

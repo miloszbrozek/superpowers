@@ -42,12 +42,14 @@ Based on feedback:
 - Execute next batch
 - Repeat until complete
 
-### Step 5: Complete Development
+## Output
 
-After all tasks complete and verified:
-- Announce: "I'm using the finishing-a-development-branch skill to complete this work."
-- **REQUIRED SUB-SKILL:** Use superpowers:finishing-a-development-branch
-- Follow that skill to verify tests, present options, execute choice
+**When all tasks complete:**
+- All plan tasks executed
+- All tests passing
+- Report: "All tasks complete, tests passing."
+
+The workflow orchestrator handles what comes next.
 
 ## When to Stop and Ask for Help
 
