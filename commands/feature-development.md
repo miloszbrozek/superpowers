@@ -153,6 +153,23 @@ Phase 5: Completion   → finishing-branch   → merged/PR/kept
 4. **Use TodoWrite** - track progress through phases
 5. **Skills handle HOW** - this workflow handles WHAT and WHEN
 
+## Enforcement
+
+**At each phase start:** Announce "Starting Phase N: [name] using [skill]"
+
+**For each checklist:** Create TodoWrite todos from checklist items, mark as you complete them.
+
+**Red Flags - you're skipping the workflow:**
+
+| Thought | Reality |
+|---------|---------|
+| "Design is clear from discussion" | Write the document. Phase 1 output is a file. |
+| "Worktree is overkill for this" | Phase 2 is not optional. Isolation prevents mess. |
+| "Plan is in my head" | Write it to file. Phase 3 output is a document. |
+| "Let me just start coding" | No code before Phase 4. |
+| "Tests pass, let's merge" | Phase 5 first. Present options. |
+| "I'll document later" | Documents are checkpoints, not afterthoughts. |
+
 ## Starting the Workflow
 
 Create TodoWrite with these items:
