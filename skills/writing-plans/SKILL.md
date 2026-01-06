@@ -13,7 +13,9 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
-**Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
+**Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md` (relative to current working directory)
+
+**Location awareness:** This skill works in the current directory. If you're in a worktree, the plan goes there. If you're in the main repo, the plan goes there. The skill doesn't care - it's the caller's responsibility to be in the right place.
 
 ## Bite-Sized Task Granularity
 

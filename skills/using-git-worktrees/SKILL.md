@@ -208,9 +208,12 @@ Ready to implement auth feature
 
 ## Output
 
+**After completing this skill, you are in the worktree directory.** All subsequent work happens there.
+
 Report:
-- Worktree path
+- Worktree path (full absolute path)
 - Test results (N passing, 0 failures)
 - Ready status
+- Confirm: "Working directory is now `<path>`"
 
 The workflow orchestrator handles what comes next.

@@ -44,15 +44,19 @@ Phase 5: Completion   → finishing-branch   → merged/PR/kept
 1. Invoke the using-git-worktrees skill
 2. Create isolated worktree for this feature
 3. Run project setup and verify tests pass
+4. **CRITICAL: Change working directory to the worktree**
 
 **Required output:**
 - [ ] Worktree created at reported path
 - [ ] Dependencies installed
 - [ ] Baseline tests passing
+- [ ] **Working directory changed to worktree** (all subsequent work happens here)
 
-**Checkpoint:** Report worktree path and test results. Ask: "Workspace ready. Ready to create implementation plan?"
+**Checkpoint:** Report worktree path and test results. Ask: "Workspace ready at `<path>`. Ready to create implementation plan?"
 
-**DO NOT proceed to Phase 3 until worktree is ready with passing tests.**
+**DO NOT proceed to Phase 3 until worktree is ready AND you have cd'd into it.**
+
+**All subsequent phases (3, 4, 5) operate inside the worktree.**
 
 ---
 

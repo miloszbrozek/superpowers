@@ -35,8 +35,10 @@ Start by understanding the current project context, then ask questions one at a 
 ## Output
 
 **Required deliverable:**
-- Design document at `docs/plans/YYYY-MM-DD-<topic>-design.md`
+- Design document at `docs/plans/YYYY-MM-DD-<topic>-design.md` (relative to current working directory)
 - Commit the document to git
+
+**Location awareness:** This skill works in the current directory. The design document goes wherever you are. It's the caller's responsibility to be in the right place (main repo for standalone use, worktree if part of workflow).
 
 **When done:** Report the document path. The workflow orchestrator handles what comes next.
 
