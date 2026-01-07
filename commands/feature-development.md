@@ -12,7 +12,7 @@ This workflow orchestrates the complete feature development process. Each phase 
 ```
 Phase 1: Design       → brainstorming       → design + implementation plan
 Phase 2: Setup        → using-git-worktrees → isolated worktree (auto)
-Phase 3: Implementation → [choose method]   → working code + tests
+Phase 3: Implementation → executing-plans    → working code + tests
 Phase 4: Completion   → finishing-branch    → merged/PR/kept
 ```
 
@@ -54,30 +54,13 @@ Phase 4: Completion   → finishing-branch    → merged/PR/kept
 - [ ] Baseline tests passing
 - [ ] **Working directory changed to worktree**
 
-**NO CHECKPOINT.** Report worktree path and test results, then immediately ask:
-
-"Choose implementation method:
-1. **Subagent-Driven** - fresh subagent per task, review between tasks
-2. **Batch Execution** - execute in batches, review between batches"
+**NO CHECKPOINT.** Report worktree path and test results, then proceed to Phase 3.
 
 **All subsequent phases operate inside the worktree.**
 
 ---
 
 ## Phase 3: Implementation
-
-**Based on user choice:**
-
-### Option A: Subagent-Driven Development
-
-**Skill:** `superpowers:subagent-driven-development`
-
-**Process:**
-1. Invoke the subagent-driven-development skill
-2. Follow its process for each task from the design document's Implementation Plan
-3. Two-stage review after each task (spec compliance, then code quality)
-
-### Option B: Batch Execution
 
 **Skill:** `superpowers:executing-plans`
 
@@ -86,7 +69,7 @@ Phase 4: Completion   → finishing-branch    → merged/PR/kept
 2. Execute tasks in batches of 3
 3. Report and wait for feedback between batches
 
-**Required output (both options):**
+**Required output:**
 - [ ] All plan tasks completed
 - [ ] All tests passing
 - [ ] Code reviewed and approved
@@ -123,8 +106,8 @@ Phase 4: Completion   → finishing-branch    → merged/PR/kept
 | Phase | Skill | Output | User Interaction |
 |-------|-------|--------|------------------|
 | 1. Design | brainstorming | design + plan | Questions (if any) + "go" |
-| 2. Setup | using-git-worktrees | worktree | Choose impl method |
-| 3. Implementation | subagent/executing | code + tests | Per-batch reviews |
+| 2. Setup | using-git-worktrees | worktree | None |
+| 3. Implementation | executing-plans | code + tests | Per-batch reviews |
 | 4. Completion | finishing-branch | merged/PR | Choose finish option |
 
 ## Rules
