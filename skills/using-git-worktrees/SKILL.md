@@ -98,9 +98,34 @@ git worktree add "$path" -b "$BRANCH_NAME"
 cd "$path"
 ```
 
-### 3. Run Project Setup
+### 3. Symlink Shared Files
 
-Auto-detect and run appropriate setup:
+Symlink files from main worktree that are gitignored but needed for runtime:
+
+```bash
+# Get path to main worktree
+main_worktree=$(git worktree list | head -1 | awk '{print $1}')
+
+# Symlink .env if exists in main
+if [ -f "$main_worktree/.env" ] && [ ! -e ".env" ]; then
+  ln -s "$main_worktree/.env" .env
+  echo "Symlinked .env"
+fi
+
+# Symlink .venv if exists in main (saves disk space and install time)
+if [ -d "$main_worktree/.venv" ] && [ ! -e ".venv" ]; then
+  ln -s "$main_worktree/.venv" .venv
+  echo "Symlinked .venv"
+fi
+```
+
+**Why symlink these files:**
+- `.venv` - Saves 5-10GB disk space and minutes of install time per worktree
+- `.env` - API keys and credentials needed to run app/tests
+
+### 4. Run Project Setup
+
+Auto-detect and run appropriate setup. **Skip Python install if .venv is symlinked.**
 
 ```bash
 # Node.js
@@ -109,15 +134,20 @@ if [ -f package.json ]; then npm install; fi
 # Rust
 if [ -f Cargo.toml ]; then cargo build; fi
 
-# Python
-if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-if [ -f pyproject.toml ]; then poetry install; fi
+# Python - skip if .venv is symlinked
+if [ -L .venv ]; then
+  echo "Using symlinked .venv, skipping Python dependency install"
+elif [ -f pyproject.toml ]; then
+  uv sync || poetry install
+elif [ -f requirements.txt ]; then
+  pip install -r requirements.txt
+fi
 
 # Go
 if [ -f go.mod ]; then go mod download; fi
 ```
 
-### 4. Verify Clean Baseline
+### 5. Verify Clean Baseline
 
 Run tests to ensure worktree starts clean:
 
@@ -133,7 +163,7 @@ go test ./...
 
 **If tests pass:** Report ready.
 
-### 5. Report Location
+### 6. Report Location
 
 ```
 Worktree ready at <full-path>
@@ -150,6 +180,8 @@ Ready to implement <feature-name>
 | Both exist | Use `.worktrees/` |
 | Neither exists | Check CLAUDE.md → Ask user |
 | Directory not ignored | Add to .gitignore + commit |
+| `.env` exists in main | Symlink it |
+| `.venv` exists in main | Symlink it, skip Python install |
 | Tests fail during baseline | Report failures + ask |
 | No package.json/Cargo.toml | Skip dependency install |
 
@@ -183,10 +215,13 @@ You: I'm using the using-git-worktrees skill to set up an isolated workspace.
 [Check .worktrees/ - exists]
 [Verify ignored - git check-ignore confirms .worktrees/ is ignored]
 [Create worktree: git worktree add .worktrees/auth -b feature/auth]
-[Run npm install]
-[Run npm test - 47 passing]
+[Symlink .env from main worktree]
+[Symlink .venv from main worktree]
+[Skip Python install - using symlinked .venv]
+[Run pytest - 47 passing]
 
 Worktree ready at /Users/jesse/myproject/.worktrees/auth
+Symlinked: .env, .venv
 Tests passing (47 tests, 0 failures)
 Ready to implement auth feature
 ```
@@ -212,6 +247,7 @@ Ready to implement auth feature
 
 Report:
 - Worktree path (full absolute path)
+- Symlinked files (if any): .env, .venv
 - Test results (N passing, 0 failures)
 - Ready status
 - Confirm: "Working directory is now `<path>`"
