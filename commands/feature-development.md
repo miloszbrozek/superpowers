@@ -1,42 +1,44 @@
 ---
-description: Complete feature development workflow - from idea through brainstorming, planning, implementation to completion
+description: Complete feature development workflow - from idea through brainstorming, implementation to completion
 disable-model-invocation: true
 ---
 
 # Feature Development Workflow
 
-This workflow orchestrates the complete feature development process. Each phase has a specific skill and required output. **DO NOT skip phases or proceed without completing outputs.**
+This workflow orchestrates the complete feature development process. Each phase has a specific skill and required output. **Minimize user interruptions - only stop when truly needed.**
 
 ## Workflow Overview
 
 ```
-Phase 1: Design       → brainstorming      → design document
-Phase 2: Setup        → using-git-worktrees → isolated worktree
-Phase 3: Planning     → writing-plans      → implementation plan
-Phase 4: Implementation → [choose method]  → working code + tests
-Phase 5: Completion   → finishing-branch   → merged/PR/kept
+Phase 1: Design       → brainstorming       → design + implementation plan
+Phase 2: Setup        → using-git-worktrees → isolated worktree (auto)
+Phase 3: Implementation → [choose method]   → working code + tests
+Phase 4: Completion   → finishing-branch    → merged/PR/kept
 ```
 
-## Phase 1: Design
+## Phase 1: Design + Planning
 
 **Skill:** `superpowers:brainstorming`
 
 **Process:**
 1. Invoke the brainstorming skill
-2. Follow its process completely
-3. Save design document
+2. Create design document WITH implementation plan (see skill for format)
+3. Save to `docs/plans/YYYY-MM-DD-<topic>-design.md`
 
 **Required output:**
-- [ ] Design document at `docs/plans/YYYY-MM-DD-<topic>-design.md`
+- [ ] Design + implementation plan document
 - [ ] Document committed to git
 
-**Checkpoint:** Show user the design document path. Ask: "Design complete. Ready to set up workspace?"
+**Checkpoint:** The brainstorming skill has ONE checkpoint with options:
+- "go" → Automatically proceed to Phase 2
+- Answer questions → Update doc, then proceed
+- "edit" → Wait for user edit, then proceed
 
-**DO NOT proceed to Phase 2 until design document exists and is committed.**
+**DO NOT ask additional questions. After "go", proceed directly to Phase 2.**
 
 ---
 
-## Phase 2: Workspace Setup
+## Phase 2: Workspace Setup (Automatic)
 
 **Skill:** `superpowers:using-git-worktrees`
 
@@ -50,40 +52,21 @@ Phase 5: Completion   → finishing-branch   → merged/PR/kept
 - [ ] Worktree created at reported path
 - [ ] Dependencies installed
 - [ ] Baseline tests passing
-- [ ] **Working directory changed to worktree** (all subsequent work happens here)
+- [ ] **Working directory changed to worktree**
 
-**Checkpoint:** Report worktree path and test results. Ask: "Workspace ready at `<path>`. Ready to create implementation plan?"
+**NO CHECKPOINT.** Report worktree path and test results, then immediately ask:
 
-**DO NOT proceed to Phase 3 until worktree is ready AND you have cd'd into it.**
+"Choose implementation method:
+1. **Subagent-Driven** - fresh subagent per task, review between tasks
+2. **Batch Execution** - execute in batches, review between batches"
 
-**All subsequent phases (3, 4, 5) operate inside the worktree.**
-
----
-
-## Phase 3: Planning
-
-**Skill:** `superpowers:writing-plans`
-
-**Process:**
-1. Invoke the writing-plans skill
-2. Create detailed implementation plan with bite-sized tasks
-3. Save plan document
-
-**Required output:**
-- [ ] Plan document at `docs/plans/YYYY-MM-DD-<feature>-plan.md`
-- [ ] Document committed to git
-
-**Checkpoint:** Show user the plan. Ask: "Plan complete. Choose implementation method:"
-1. **Subagent-Driven** (this session) - fresh subagent per task, review between tasks
-2. **Batch Execution** (this session) - execute in batches, review between batches
-
-**DO NOT proceed to Phase 4 until user chooses implementation method.**
+**All subsequent phases operate inside the worktree.**
 
 ---
 
-## Phase 4: Implementation
+## Phase 3: Implementation
 
-**Based on user choice from Phase 3:**
+**Based on user choice:**
 
 ### Option A: Subagent-Driven Development
 
@@ -91,7 +74,7 @@ Phase 5: Completion   → finishing-branch   → merged/PR/kept
 
 **Process:**
 1. Invoke the subagent-driven-development skill
-2. Follow its process for each task
+2. Follow its process for each task from the design document's Implementation Plan
 3. Two-stage review after each task (spec compliance, then code quality)
 
 ### Option B: Batch Execution
@@ -110,11 +93,11 @@ Phase 5: Completion   → finishing-branch   → merged/PR/kept
 
 **Checkpoint:** "All tasks complete, tests passing. Ready to finish the branch?"
 
-**DO NOT proceed to Phase 5 until all tasks are done and tests pass.**
+**DO NOT proceed to Phase 4 until all tasks are done and tests pass.**
 
 ---
 
-## Phase 5: Completion
+## Phase 4: Completion
 
 **Skill:** `superpowers:finishing-a-development-branch`
 
@@ -137,21 +120,19 @@ Phase 5: Completion   → finishing-branch   → merged/PR/kept
 
 ## Quick Reference
 
-| Phase | Skill | Output | Checkpoint Question |
-|-------|-------|--------|---------------------|
-| 1. Design | brainstorming | design doc | "Ready to set up workspace?" |
-| 2. Setup | using-git-worktrees | worktree | "Ready to create plan?" |
-| 3. Planning | writing-plans | plan doc | "Choose implementation method" |
-| 4. Implementation | subagent/executing | code + tests | "Ready to finish branch?" |
-| 5. Completion | finishing-branch | merged/PR | - |
+| Phase | Skill | Output | User Interaction |
+|-------|-------|--------|------------------|
+| 1. Design | brainstorming | design + plan | Questions (if any) + "go" |
+| 2. Setup | using-git-worktrees | worktree | Choose impl method |
+| 3. Implementation | subagent/executing | code + tests | Per-batch reviews |
+| 4. Completion | finishing-branch | merged/PR | Choose finish option |
 
 ## Rules
 
 1. **Complete each phase before proceeding** - no skipping
-2. **Create outputs before checkpoints** - documents must exist
-3. **Wait for user confirmation** - at each checkpoint
-4. **Use TodoWrite** - track progress through phases
-5. **Skills handle HOW** - this workflow handles WHAT and WHEN
+2. **Minimize interruptions** - only ask when truly needed
+3. **Use TodoWrite** - track progress through phases
+4. **Skills handle HOW** - this workflow handles WHAT and WHEN
 
 ## Enforcement
 
@@ -165,18 +146,16 @@ Phase 5: Completion   → finishing-branch   → merged/PR/kept
 |---------|---------|
 | "Design is clear from discussion" | Write the document. Phase 1 output is a file. |
 | "Worktree is overkill for this" | Phase 2 is not optional. Isolation prevents mess. |
-| "Plan is in my head" | Write it to file. Phase 3 output is a document. |
-| "Let me just start coding" | No code before Phase 4. |
-| "Tests pass, let's merge" | Phase 5 first. Present options. |
+| "Let me just start coding" | No code before Phase 3. |
+| "Tests pass, let's merge" | Phase 4 first. Present options. |
 | "I'll document later" | Documents are checkpoints, not afterthoughts. |
 
 ## Starting the Workflow
 
 Create TodoWrite with these items:
-- [ ] Phase 1: Design (brainstorming)
+- [ ] Phase 1: Design + Planning (brainstorming)
 - [ ] Phase 2: Setup (using-git-worktrees)
-- [ ] Phase 3: Planning (writing-plans)
-- [ ] Phase 4: Implementation
-- [ ] Phase 5: Completion (finishing-branch)
+- [ ] Phase 3: Implementation
+- [ ] Phase 4: Completion (finishing-branch)
 
 Then invoke `superpowers:brainstorming` to begin Phase 1.

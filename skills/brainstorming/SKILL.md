@@ -1,54 +1,148 @@
 ---
 name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+description: "Use before any creative work - creating features, building components, adding functionality. Analyzes codebase, creates design draft, then asks all questions at once."
 ---
 
 # Brainstorming Ideas Into Designs
 
 ## Overview
 
-Help turn ideas into fully formed designs and specs through natural collaborative dialogue.
-
-Start by understanding the current project context, then ask questions one at a time to refine the idea. Once you understand what you're building, present the design in small sections (200-300 words), checking after each section whether it looks right so far.
+Turn ideas into complete design + implementation plan documents. Sequential process (analyze → design → plan) but NO interruptions until the document is complete. Questions at the end, then iterate if needed.
 
 ## The Process
 
-**Understanding the idea:**
+### Step 1: Analyze (silent)
 
-- Check out the current project state first (files, docs, recent commits)
-- Ask questions one at a time to refine the idea
-- Prefer multiple choice questions when possible, but open-ended is fine too
-- Only one question per message - if a topic needs more exploration, break it into multiple questions
-- Focus on understanding: purpose, constraints, success criteria
+**DO NOT ask questions or show output.** Gather context:
 
-**Exploring approaches:**
+- Read relevant files, docs, recent commits
+- Understand existing patterns and architecture
+- Identify constraints and dependencies
+- Form your own opinion about the best approach
+- Note uncertainties for Open Questions section
 
-- Propose 2-3 different approaches with trade-offs
-- Present options conversationally with your recommendation and reasoning
-- Lead with your recommended option and explain why
+### Step 2: Write Design Section (silent)
 
-**Presenting the design:**
+**DO NOT ask questions or show output.** Write directly to file:
 
-- Once you believe you understand what you're building, present the design
-- Break it into sections of 200-300 words
-- Ask after each section whether it looks right so far
-- Cover: architecture, components, data flow, error handling, testing
-- Be ready to go back and clarify if something doesn't make sense
+```markdown
+# [Feature] Design
+
+## Goal
+[What we're building and why]
+
+## Approach
+[Your recommended approach with reasoning]
+
+## Architecture
+[Components, data flow, integration points]
+
+## Implementation Notes
+[Key files to modify, patterns to follow]
+
+## Testing Strategy
+[How to verify it works]
+
+## Open Questions
+[Things you're uncertain about - these become your questions at the end]
+```
+
+### Step 3: Write Implementation Plan Section (silent)
+
+**DO NOT ask questions or show output.** Append to the same file:
+
+```markdown
+---
+
+## Implementation Plan
+
+**Tech Stack:** [Key technologies/libraries involved]
+
+### Task 1: [First Component]
+
+**Files:**
+- Create: `exact/path/to/file.py`
+- Modify: `exact/path/to/existing.py:123-145`
+- Test: `tests/exact/path/to/test.py`
+
+**Steps:**
+1. Write failing test for [specific behavior]
+2. Run test to verify it fails
+3. Implement minimal code to pass
+4. Run tests, verify pass
+5. Commit: `git commit -m "feat: add [component]"`
+
+### Task 2: [Second Component]
+[Same structure...]
+
+### Task N: [Final Integration/Cleanup]
+[Same structure...]
+```
+
+Save to: `docs/plans/YYYY-MM-DD-<topic>-design.md`
+
+### Step 4: Single Checkpoint
+
+**NOW show output and ask questions.** Present everything at once:
+
+```
+Design + implementation plan ready: docs/plans/YYYY-MM-DD-<topic>-design.md
+
+[Brief summary of approach - 2-3 sentences]
+[Number of implementation tasks: N]
+
+Questions:
+1. [Question from Open Questions]
+2. [Question from Open Questions]
+
+Options:
+• "go" - Proceed as designed
+• Answer questions - I'll update design+plan based on answers, then ask again
+• "edit" - You edit the doc, I'll wait
+```
+
+**Wait for user response.**
+
+### Step 5: Iterate or Finalize
+
+Based on response:
+- **"go"** → Commit doc, proceed to next workflow phase
+- **Answers provided** → Re-run Steps 2-4 (update design AND plan based on answers, show updated doc, ask if more questions)
+- **"edit"** → Wait for user to edit, then re-read doc and proceed
+
+**Loop until user says "go".**
 
 ## Output
 
 **Required deliverable:**
-
-- Design document at `docs/plans/YYYY-MM-DD-<topic>-design.md` (relative to current working directory)
-- Commit the document to git
+- Design + implementation plan at `docs/plans/YYYY-MM-DD-<topic>-design.md`
+- Committed to git
 
 **When done:** Report the document path. The workflow orchestrator handles what comes next.
 
+## Implementation Plan Guidelines
+
+Each task should be bite-sized (2-5 minutes):
+- Exact file paths always
+- Complete code snippets (not "add validation")
+- Exact test commands with expected output
+- TDD: test first, then implement
+- Frequent commits after each task
+
 ## Key Principles
 
-- **One question at a time** - Don't overwhelm with multiple questions
-- **Multiple choice preferred** - Easier to answer than open-ended when possible
-- **YAGNI ruthlessly** - Remove unnecessary features from all designs
-- **Explore alternatives** - Always propose 2-3 approaches before settling
-- **Incremental validation** - Present design in sections, validate each
-- **Be flexible** - Go back and clarify when something doesn't make sense
+- **Sequential but uninterrupted** - Design then plan, but no stops in between
+- **Questions at the end only** - Never ask mid-process
+- **Iterate on answers** - Update BOTH design and plan when user provides answers
+- **YAGNI ruthlessly** - Remove unnecessary features from designs
+- **Sensible defaults** - If you can make a reasonable choice, make it
+
+## Anti-Patterns
+
+| Old Way (don't do) | New Way |
+|-------------------|---------|
+| "What's the scope?" | Analyze codebase, propose scope |
+| "Should we use X or Y?" | Pick one, explain why, add to Open Questions |
+| "Here's the design, ok?" then "Here's the plan, ok?" | Write both, ONE checkpoint at end |
+| Ask question, wait, continue | Collect ALL questions, ask once |
+| Update only design on feedback | Update BOTH design and plan |
