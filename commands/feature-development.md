@@ -10,35 +10,15 @@ This workflow orchestrates the complete feature development process. Each phase 
 ## Workflow Overview
 
 ```
-Phase 1: Design       → brainstorming       → design + implementation plan
-Phase 2: Setup        → using-git-worktrees → isolated worktree (auto)
+Phase 1: Setup        → using-git-worktrees → isolated worktree
+Phase 2: Design       → brainstorming       → design + implementation plan
 Phase 3: Implementation → executing-plans    → working code + tests
 Phase 4: Completion   → finishing-branch    → merged/PR/kept
 ```
 
-## Phase 1: Design + Planning
+**Key principle:** Worktree first. All artifacts (design docs, code, tests) are created inside the isolated worktree from the start.
 
-**Skill:** `superpowers:brainstorming`
-
-**Process:**
-1. Invoke the brainstorming skill
-2. Create design document WITH implementation plan (see skill for format)
-3. Save to `docs/plans/YYYY-MM-DD-<topic>-design.md`
-
-**Required output:**
-- [ ] Design + implementation plan document
-- [ ] Document committed to git
-
-**Checkpoint:** The brainstorming skill has ONE checkpoint with options:
-- "go" → Automatically proceed to Phase 2
-- Answer questions → Update doc, then proceed
-- "edit" → Wait for user edit, then proceed
-
-**DO NOT ask additional questions. After "go", proceed directly to Phase 2.**
-
----
-
-## Phase 2: Workspace Setup (Automatic)
+## Phase 1: Workspace Setup
 
 **Skill:** `superpowers:using-git-worktrees`
 
@@ -54,9 +34,31 @@ Phase 4: Completion   → finishing-branch    → merged/PR/kept
 - [ ] Baseline tests passing
 - [ ] **Working directory changed to worktree**
 
-**NO CHECKPOINT.** Report worktree path and test results, then proceed to Phase 3.
+**NO CHECKPOINT.** Report worktree path and test results, then proceed to Phase 2.
 
 **All subsequent phases operate inside the worktree.**
+
+---
+
+## Phase 2: Design + Planning
+
+**Skill:** `superpowers:brainstorming`
+
+**Process:**
+1. Invoke the brainstorming skill
+2. Create design document WITH implementation plan (see skill for format)
+3. Save to `docs/plans/YYYY-MM-DD-<topic>-design.md` (inside worktree)
+
+**Required output:**
+- [ ] Design + implementation plan document
+- [ ] Document committed to git
+
+**Checkpoint:** The brainstorming skill has ONE checkpoint with options:
+- "go" → Automatically proceed to Phase 3
+- Answer questions → Update doc, then proceed
+- "edit" → Wait for user edit, then proceed
+
+**DO NOT ask additional questions. After "go", proceed directly to Phase 3.**
 
 ---
 
@@ -105,8 +107,8 @@ Phase 4: Completion   → finishing-branch    → merged/PR/kept
 
 | Phase | Skill | Output | User Interaction |
 |-------|-------|--------|------------------|
-| 1. Design | brainstorming | design + plan | Questions (if any) + "go" |
-| 2. Setup | using-git-worktrees | worktree | None |
+| 1. Setup | using-git-worktrees | worktree | None |
+| 2. Design | brainstorming | design + plan | Questions (if any) + "go" |
 | 3. Implementation | executing-plans | code + tests | Per-batch reviews |
 | 4. Completion | finishing-branch | merged/PR | Choose finish option |
 
@@ -127,8 +129,8 @@ Phase 4: Completion   → finishing-branch    → merged/PR/kept
 
 | Thought | Reality |
 |---------|---------|
-| "Design is clear from discussion" | Write the document. Phase 1 output is a file. |
-| "Worktree is overkill for this" | Phase 2 is not optional. Isolation prevents mess. |
+| "Worktree is overkill for this" | Phase 1 is not optional. Isolation prevents mess. |
+| "Design is clear from discussion" | Write the document. Phase 2 output is a file. |
 | "Let me just start coding" | No code before Phase 3. |
 | "Tests pass, let's merge" | Phase 4 first. Present options. |
 | "I'll document later" | Documents are checkpoints, not afterthoughts. |
@@ -136,9 +138,9 @@ Phase 4: Completion   → finishing-branch    → merged/PR/kept
 ## Starting the Workflow
 
 Create TodoWrite with these items:
-- [ ] Phase 1: Design + Planning (brainstorming)
-- [ ] Phase 2: Setup (using-git-worktrees)
+- [ ] Phase 1: Setup (using-git-worktrees)
+- [ ] Phase 2: Design + Planning (brainstorming)
 - [ ] Phase 3: Implementation
 - [ ] Phase 4: Completion (finishing-branch)
 
-Then invoke `superpowers:brainstorming` to begin Phase 1.
+Then invoke `superpowers:using-git-worktrees` to begin Phase 1.
