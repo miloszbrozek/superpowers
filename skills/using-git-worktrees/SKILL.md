@@ -17,15 +17,14 @@ Git worktrees create isolated workspaces sharing the same repository, allowing w
 
 Follow this priority order:
 
-### 1. Check Existing Directories
+### 1. Check Existing Directory
 
 ```bash
-# Check in priority order
-ls -d .worktrees 2>/dev/null     # Preferred (hidden)
-ls -d worktrees 2>/dev/null      # Alternative
+# Check for worktrees directory
+ls -d worktrees 2>/dev/null
 ```
 
-**If found:** Use that directory. If both exist, `.worktrees` wins.
+**If found:** Use `worktrees/` directory.
 
 ### 2. Check CLAUDE.md
 
@@ -35,28 +34,24 @@ grep -i "worktree.*director" CLAUDE.md 2>/dev/null
 
 **If preference specified:** Use it without asking.
 
-### 3. Ask User
+### 3. Default to worktrees/
 
-If no directory exists and no CLAUDE.md preference:
+If no directory exists and no CLAUDE.md preference, use `worktrees/` (project-local).
 
+For global location preference, user can specify in CLAUDE.md:
 ```
-No worktree directory found. Where should I create worktrees?
-
-1. .worktrees/ (project-local, hidden)
-2. ~/.config/superpowers/worktrees/<project-name>/ (global location)
-
-Which would you prefer?
+Worktree directory: ~/.config/superpowers/worktrees/
 ```
 
 ## Safety Verification
 
-### For Project-Local Directories (.worktrees or worktrees)
+### For Project-Local Directory (worktrees/)
 
 **MUST verify directory is ignored before creating worktree:**
 
 ```bash
 # Check if directory is ignored (respects local, global, and system gitignore)
-git check-ignore -q .worktrees 2>/dev/null || git check-ignore -q worktrees 2>/dev/null
+git check-ignore -q worktrees 2>/dev/null
 ```
 
 **If NOT ignored:**
@@ -85,8 +80,8 @@ project=$(basename "$(git rev-parse --show-toplevel)")
 ```bash
 # Determine full path
 case $LOCATION in
-  .worktrees|worktrees)
-    path="$LOCATION/$BRANCH_NAME"
+  worktrees)
+    path="worktrees/$BRANCH_NAME"
     ;;
   ~/.config/superpowers/worktrees/*)
     path="~/.config/superpowers/worktrees/$project/$BRANCH_NAME"
@@ -175,11 +170,9 @@ Ready to implement <feature-name>
 
 | Situation | Action |
 |-----------|--------|
-| `.worktrees/` exists | Use it (verify ignored) |
 | `worktrees/` exists | Use it (verify ignored) |
-| Both exist | Use `.worktrees/` |
-| Neither exists | Check CLAUDE.md → Ask user |
-| Directory not ignored | Add to .gitignore + commit |
+| No directory exists | Check CLAUDE.md → default to `worktrees/` |
+| Directory not ignored | Add `worktrees/` to .gitignore + commit |
 | `.env` exists in main | Symlink it |
 | `.venv` exists in main | Symlink it, skip Python install |
 | Tests fail during baseline | Report failures + ask |
@@ -212,15 +205,15 @@ Ready to implement <feature-name>
 ```
 You: I'm using the using-git-worktrees skill to set up an isolated workspace.
 
-[Check .worktrees/ - exists]
-[Verify ignored - git check-ignore confirms .worktrees/ is ignored]
-[Create worktree: git worktree add .worktrees/auth -b feature/auth]
+[Check worktrees/ - exists]
+[Verify ignored - git check-ignore confirms worktrees/ is ignored]
+[Create worktree: git worktree add worktrees/auth -b feature/auth]
 [Symlink .env from main worktree]
 [Symlink .venv from main worktree]
 [Skip Python install - using symlinked .venv]
 [Run pytest - 47 passing]
 
-Worktree ready at /Users/jesse/myproject/.worktrees/auth
+Worktree ready at /Users/jesse/myproject/worktrees/auth
 Symlinked: .env, .venv
 Tests passing (47 tests, 0 failures)
 Ready to implement auth feature
