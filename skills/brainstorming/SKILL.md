@@ -86,7 +86,7 @@ Save to: `docs/plans/YYYY-MM-DD-<topic>-design.md`
 **NOW show output and ask questions.** Present everything at once:
 
 ```
-Design + implementation plan ready: docs/plans/YYYY-MM-DD-<topic>-design.md
+Design + implementation plan ready: <absolute-path>/docs/plans/YYYY-MM-DD-<topic>-design.md
 
 [Brief summary of approach - 2-3 sentences]
 [Number of implementation tasks: N]
@@ -99,6 +99,11 @@ Options:
 • "go" - Proceed as designed
 • Answer questions - I'll update design+plan based on answers, then ask again
 • "edit" - You edit the doc, I'll wait
+```
+
+**Open the document in VSCode:**
+```bash
+code <absolute-path>/docs/plans/YYYY-MM-DD-<topic>-design.md
 ```
 
 **Wait for user response.**
