@@ -25,6 +25,7 @@ npm test / cargo test / pytest / go test ./...
 ```
 
 **If tests fail:**
+
 ```
 Tests failing (<N> failures). Must fix before completing:
 
@@ -68,13 +69,13 @@ Which option?
 
 #### Option 1: Show Diff
 
-Invoke the `fork-terminal` skill with this exact command:
+Invoke the `fork-terminal` skill with this exact command (replace <pwd> with current directory):
 
 ```
-git diff $(git merge-base HEAD master)
+git-diff $(git merge-base HEAD master) --cwd <pwd>
 ```
 
-**CRITICAL:** Do NOT modify this command. Do NOT execute it yourself. Pass it exactly as written to the `fork-terminal` skill - it will open a new terminal with the diff.
+**CRITICAL:** Do NOT modify this command. Do NOT execute it yourself. Pass it exactly as written to the `fork-terminal` skill - it will open a new terminal with the diff. The command is named "git-diff", there is no typo.
 
 After showing diff, return to Step 3 and present options again.
 
@@ -127,6 +128,7 @@ Report: "Keeping branch <name>. Worktree preserved at <path>."
 #### Option 5: Discard
 
 **Confirm first:**
+
 ```
 This will permanently delete:
 - Branch <name>
@@ -139,6 +141,7 @@ Type 'discard' to confirm.
 Wait for exact confirmation.
 
 If confirmed:
+
 ```bash
 git checkout <base-branch>
 git branch -D <feature-branch>
@@ -151,11 +154,13 @@ Then: Cleanup worktree (Step 5)
 **For Options 2, 3, 5:**
 
 Check if in worktree:
+
 ```bash
 git worktree list | grep $(git branch --show-current)
 ```
 
 If yes:
+
 ```bash
 git worktree remove <worktree-path>
 ```
@@ -164,41 +169,47 @@ git worktree remove <worktree-path>
 
 ## Quick Reference
 
-| Option | Merge | Push | Keep Worktree | Cleanup Branch |
-|--------|-------|------|---------------|----------------|
-| 1. Show diff | - | - | ✓ | - |
-| 2. Merge locally | ✓ | - | - | ✓ |
-| 3. Create PR | - | ✓ | ✓ | - |
-| 4. Keep as-is | - | - | ✓ | - |
-| 5. Discard | - | - | - | ✓ (force) |
+| Option           | Merge | Push | Keep Worktree | Cleanup Branch |
+| ---------------- | ----- | ---- | ------------- | -------------- |
+| 1. Show diff     | -     | -    | ✓             | -              |
+| 2. Merge locally | ✓     | -    | -             | ✓              |
+| 3. Create PR     | -     | ✓    | ✓             | -              |
+| 4. Keep as-is    | -     | -    | ✓             | -              |
+| 5. Discard       | -     | -    | -             | ✓ (force)      |
 
 ## Common Mistakes
 
 **Skipping test verification**
+
 - **Problem:** Merge broken code, create failing PR
 - **Fix:** Always verify tests before offering options
 
 **Open-ended questions**
+
 - **Problem:** "What should I do next?" → ambiguous
 - **Fix:** Present exactly 5 structured options
 
 **Automatic worktree cleanup**
+
 - **Problem:** Remove worktree when might need it (Option 1, 3, 4)
 - **Fix:** Only cleanup for Options 2 and 5
 
 **No confirmation for discard**
+
 - **Problem:** Accidentally delete work
 - **Fix:** Require typed "discard" confirmation
 
 ## Red Flags
 
 **Never:**
+
 - Proceed with failing tests
 - Merge without verifying tests on result
 - Delete work without confirmation
 - Force-push without explicit request
 
 **Always:**
+
 - Verify tests before offering options
 - Present exactly 5 options
 - Get typed confirmation for Option 5
