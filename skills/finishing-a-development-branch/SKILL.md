@@ -48,15 +48,16 @@ Or ask: "This branch split from main - is that correct?"
 
 ### Step 3: Present Options
 
-Present exactly these 4 options:
+Present exactly these 5 options:
 
 ```
 Implementation complete. What would you like to do?
 
-1. Merge back to <base-branch> locally
-2. Push and create a Pull Request
-3. Keep the branch as-is (I'll handle it later)
-4. Discard this work
+1. Show diff of implemented changes
+2. Merge back to <base-branch> locally
+3. Push and create a Pull Request
+4. Keep the branch as-is (I'll handle it later)
+5. Discard this work
 
 Which option?
 ```
@@ -65,7 +66,19 @@ Which option?
 
 ### Step 4: Execute Choice
 
-#### Option 1: Merge Locally
+#### Option 1: Show Diff
+
+Invoke the `fork-terminal` skill with this exact command:
+
+```
+git diff $(git merge-base HEAD master)
+```
+
+**CRITICAL:** Do NOT modify this command. Do NOT execute it yourself. Pass it exactly as written to the `fork-terminal` skill - it will open a new terminal with the diff.
+
+After showing diff, return to Step 3 and present options again.
+
+#### Option 2: Merge Locally
 
 ```bash
 # Switch to base branch
@@ -86,7 +99,7 @@ git branch -d <feature-branch>
 
 Then: Cleanup worktree (Step 5)
 
-#### Option 2: Push and Create PR
+#### Option 3: Push and Create PR
 
 ```bash
 # Push branch
@@ -105,13 +118,13 @@ EOF
 
 Then: Cleanup worktree (Step 5)
 
-#### Option 3: Keep As-Is
+#### Option 4: Keep As-Is
 
 Report: "Keeping branch <name>. Worktree preserved at <path>."
 
 **Don't cleanup worktree.**
 
-#### Option 4: Discard
+#### Option 5: Discard
 
 **Confirm first:**
 ```
@@ -135,7 +148,7 @@ Then: Cleanup worktree (Step 5)
 
 ### Step 5: Cleanup Worktree
 
-**For Options 1, 2, 4:**
+**For Options 2, 3, 5:**
 
 Check if in worktree:
 ```bash
@@ -147,16 +160,17 @@ If yes:
 git worktree remove <worktree-path>
 ```
 
-**For Option 3:** Keep worktree.
+**For Options 1, 4:** Keep worktree.
 
 ## Quick Reference
 
 | Option | Merge | Push | Keep Worktree | Cleanup Branch |
 |--------|-------|------|---------------|----------------|
-| 1. Merge locally | ✓ | - | - | ✓ |
-| 2. Create PR | - | ✓ | ✓ | - |
-| 3. Keep as-is | - | - | ✓ | - |
-| 4. Discard | - | - | - | ✓ (force) |
+| 1. Show diff | - | - | ✓ | - |
+| 2. Merge locally | ✓ | - | - | ✓ |
+| 3. Create PR | - | ✓ | ✓ | - |
+| 4. Keep as-is | - | - | ✓ | - |
+| 5. Discard | - | - | - | ✓ (force) |
 
 ## Common Mistakes
 
@@ -166,11 +180,11 @@ git worktree remove <worktree-path>
 
 **Open-ended questions**
 - **Problem:** "What should I do next?" → ambiguous
-- **Fix:** Present exactly 4 structured options
+- **Fix:** Present exactly 5 structured options
 
 **Automatic worktree cleanup**
-- **Problem:** Remove worktree when might need it (Option 2, 3)
-- **Fix:** Only cleanup for Options 1 and 4
+- **Problem:** Remove worktree when might need it (Option 1, 3, 4)
+- **Fix:** Only cleanup for Options 2 and 5
 
 **No confirmation for discard**
 - **Problem:** Accidentally delete work
@@ -186,9 +200,9 @@ git worktree remove <worktree-path>
 
 **Always:**
 - Verify tests before offering options
-- Present exactly 4 options
-- Get typed confirmation for Option 4
-- Clean up worktree for Options 1 & 4 only
+- Present exactly 5 options
+- Get typed confirmation for Option 5
+- Clean up worktree for Options 2 & 5 only
 
 ## Output
 
