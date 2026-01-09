@@ -7,9 +7,9 @@ description: Use when you have a written implementation plan to execute in a sep
 
 ## Overview
 
-Load plan, review critically, execute tasks in batches, report for review between batches.
+Load plan, review critically, execute all tasks, report when complete.
 
-**Core principle:** Batch execution with checkpoints for architect review.
+**Core principle:** Continuous execution - only stop for blockers or completion.
 
 **Announce at start:** "I'm using the executing-plans skill to implement this plan."
 
@@ -21,26 +21,25 @@ Load plan, review critically, execute tasks in batches, report for review betwee
 3. If concerns: Raise them with your human partner before starting
 4. If no concerns: Create TodoWrite and proceed
 
-### Step 2: Execute Batch
-**Default: First 3 tasks**
+### Step 2: Execute All Tasks
+**Execute all tasks without interruption.**
 
 For each task:
 1. Mark as in_progress
 2. Follow each step exactly (plan has bite-sized steps)
 3. Run verifications as specified
 4. Mark as completed
+5. Immediately proceed to next task
 
-### Step 3: Report
-When batch complete:
-- Show what was implemented
-- Show verification output
-- Say: "Ready for feedback."
+**Do NOT stop between tasks to ask for feedback.** Keep going until either:
+- All tasks are complete, OR
+- You hit a blocker (see "When to Stop and Ask for Help")
 
-### Step 4: Continue
-Based on feedback:
-- Apply changes if needed
-- Execute next batch
-- Repeat until complete
+### Step 3: Final Report
+When ALL tasks complete:
+- Show summary of what was implemented
+- Show final verification output (tests passing)
+- Say: "All tasks complete, tests passing."
 
 ## Output
 
@@ -74,5 +73,5 @@ The workflow orchestrator handles what comes next.
 - Follow plan steps exactly
 - Don't skip verifications
 - Reference skills when plan says to
-- Between batches: just report and wait
+- Keep going until all tasks complete
 - Stop when blocked, don't guess
