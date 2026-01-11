@@ -122,6 +122,36 @@ Manual verification found issues:
 These need to be fixed before proceeding.
 ```
 
+### Step 5: Cleanup
+
+Stop all processes that were started for testing:
+
+1. **Find running processes:**
+   ```bash
+   # List background jobs started in this session
+   jobs -l
+
+   # Or find processes by port (e.g., for web apps)
+   lsof -i :3000  # adjust port number as needed
+   ```
+
+2. **Stop the processes:**
+   ```bash
+   # Kill by job number
+   kill %1
+
+   # Or kill by PID
+   kill <pid>
+   ```
+
+3. **Verify cleanup:**
+   ```bash
+   # Confirm no orphaned processes
+   jobs -l
+   ```
+
+**Important:** Always clean up before finishing, even if issues were found. Leaving processes running wastes resources and can cause port conflicts in subsequent testing.
+
 ## Output
 
 **When verification passes:**

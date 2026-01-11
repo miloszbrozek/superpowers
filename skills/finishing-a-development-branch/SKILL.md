@@ -72,10 +72,10 @@ Which option?
 Invoke the `fork-terminal` skill with this exact command (replace <pwd> with current directory):
 
 ```
-git-diff $(git merge-base HEAD master) --cwd <pwd>
+claude-diff $(git merge-base HEAD master) --cwd <pwd>
 ```
 
-**CRITICAL:** Do NOT modify this command. Do NOT execute it yourself. Pass it exactly as written to the `fork-terminal` skill - it will open a new terminal with the diff. The command is named "git-diff", there is no typo.
+**CRITICAL:** Do NOT modify this command. Do NOT execute it yourself. Pass it exactly as written to the `fork-terminal` skill - it will open a new terminal with the diff. The command is named "claude-diff", there is no typo.
 
 After showing diff, return to Step 3 and present options again.
 
