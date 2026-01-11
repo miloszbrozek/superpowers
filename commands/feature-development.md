@@ -10,10 +10,11 @@ This workflow orchestrates the complete feature development process. Each phase 
 ## Workflow Overview
 
 ```
-Phase 1: Setup        → using-git-worktrees → isolated worktree
-Phase 2: Design       → brainstorming       → design + implementation plan
-Phase 3: Implementation → executing-plans    → working code + tests
-Phase 4: Completion   → finishing-branch    → merged/PR/kept
+Phase 1: Setup          → using-git-worktrees     → isolated worktree
+Phase 2: Design         → brainstorming           → design + implementation plan
+Phase 3: Implementation → executing-plans         → working code + tests
+Phase 4: Manual Testing → manual-testing          → verified feature works
+Phase 5: Completion     → finishing-branch        → merged/PR/kept
 ```
 
 **Key principle:** Worktree first. All artifacts (design docs, code, tests) are created inside the isolated worktree from the start.
@@ -68,21 +69,44 @@ Phase 4: Completion   → finishing-branch    → merged/PR/kept
 
 **Process:**
 1. Invoke the executing-plans skill
-2. Execute tasks in batches of 3
-3. Report and wait for feedback between batches
+2. Execute all tasks without interruption
+3. Run verifications as specified in plan
 
 **Required output:**
 - [ ] All plan tasks completed
 - [ ] All tests passing
-- [ ] Code reviewed and approved
 
-**Checkpoint:** "All tasks complete, tests passing. Ready to finish the branch?"
-
-**DO NOT proceed to Phase 4 until all tasks are done and tests pass.**
+**NO CHECKPOINT.** When all tasks complete and tests pass, proceed directly to Phase 4.
 
 ---
 
-## Phase 4: Completion
+## Phase 4: Manual Testing
+
+**Skill:** `superpowers:manual-testing`
+
+**Process:**
+1. Invoke the manual-testing skill
+2. Identify how to run the project (check README, package.json, etc.)
+3. Start the project
+4. Manually verify the implemented feature:
+   - **Web app:** Use browser (MCP chrome-devtools) - navigate, click, fill forms, take screenshots
+   - **CLI/Console:** Run commands in terminal, verify output
+   - **API:** Test endpoints with curl/httpie
+5. Document results with evidence (screenshots/output)
+
+**Required output:**
+- [ ] Project running
+- [ ] Feature manually tested
+- [ ] Evidence collected (screenshots for web, output for CLI)
+- [ ] Verification passed OR issues documented
+
+**If issues found:** Return to Phase 3 to fix, then repeat Phase 4.
+
+**If verification passes:** Proceed to Phase 5.
+
+---
+
+## Phase 5: Completion
 
 **Skill:** `superpowers:finishing-a-development-branch`
 
@@ -109,8 +133,9 @@ Phase 4: Completion   → finishing-branch    → merged/PR/kept
 |-------|-------|--------|------------------|
 | 1. Setup | using-git-worktrees | worktree | None |
 | 2. Design | brainstorming | design + plan | Questions (if any) + "go" |
-| 3. Implementation | executing-plans | code + tests | Per-batch reviews |
-| 4. Completion | finishing-branch | merged/PR | Choose finish option |
+| 3. Implementation | executing-plans | code + tests | Only on blockers |
+| 4. Manual Testing | manual-testing | verified feature | Only if issues found |
+| 5. Completion | finishing-branch | merged/PR | Choose finish option |
 
 ## Rules
 
@@ -118,6 +143,7 @@ Phase 4: Completion   → finishing-branch    → merged/PR/kept
 2. **Minimize interruptions** - only ask when truly needed
 3. **Use TodoWrite** - track progress through phases
 4. **Skills handle HOW** - this workflow handles WHAT and WHEN
+5. **Manual testing is mandatory** - don't skip Phase 4
 
 ## Enforcement
 
@@ -132,7 +158,8 @@ Phase 4: Completion   → finishing-branch    → merged/PR/kept
 | "Worktree is overkill for this" | Phase 1 is not optional. Isolation prevents mess. |
 | "Design is clear from discussion" | Write the document. Phase 2 output is a file. |
 | "Let me just start coding" | No code before Phase 3. |
-| "Tests pass, let's merge" | Phase 4 first. Present options. |
+| "Tests pass, let's merge" | Phase 4 first. Manual testing is required. |
+| "Manual testing is unnecessary" | Users interact manually. Verify it works for them. |
 | "I'll document later" | Documents are checkpoints, not afterthoughts. |
 
 ## Starting the Workflow
@@ -140,7 +167,8 @@ Phase 4: Completion   → finishing-branch    → merged/PR/kept
 Create TodoWrite with these items:
 - [ ] Phase 1: Setup (using-git-worktrees)
 - [ ] Phase 2: Design + Planning (brainstorming)
-- [ ] Phase 3: Implementation
-- [ ] Phase 4: Completion (finishing-branch)
+- [ ] Phase 3: Implementation (executing-plans)
+- [ ] Phase 4: Manual Testing (manual-testing)
+- [ ] Phase 5: Completion (finishing-branch)
 
 Then invoke `superpowers:using-git-worktrees` to begin Phase 1.
