@@ -5,6 +5,8 @@ description: Use after implementation is complete to manually verify the feature
 
 # Manual Testing
 
+> **INVOCATION REQUIRED:** This skill MUST be invoked via the Skill tool: `Skill(skill="manual-testing")`. Do NOT implement this skill's logic manually or describe its steps without first invoking it.
+
 ## Overview
 
 Verify implemented features work correctly by running the project and interacting with it manually. Web apps get tested in a browser, CLI tools get tested in the terminal.

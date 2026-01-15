@@ -5,6 +5,8 @@ description: Use when you have a written implementation plan to execute in a sep
 
 # Executing Plans
 
+> **INVOCATION REQUIRED:** This skill MUST be invoked via the Skill tool: `Skill(skill="executing-plans")`. Do NOT implement this skill's logic manually or describe its steps without first invoking it.
+
 ## Overview
 
 Load plan, review critically, execute all tasks, report when complete.
@@ -16,15 +18,18 @@ Load plan, review critically, execute all tasks, report when complete.
 ## The Process
 
 ### Step 1: Load and Review Plan
+
 1. Read plan file
 2. Review critically - identify any questions or concerns about the plan
 3. If concerns: Raise them with your human partner before starting
 4. If no concerns: Create TodoWrite and proceed
 
 ### Step 2: Execute All Tasks
+
 **Execute all tasks without interruption.**
 
 For each task:
+
 1. Mark as in_progress
 2. Follow each step exactly (plan has bite-sized steps)
 3. Run verifications as specified
@@ -32,11 +37,14 @@ For each task:
 5. Immediately proceed to next task
 
 **Do NOT stop between tasks to ask for feedback.** Keep going until either:
+
 - All tasks are complete, OR
 - You hit a blocker (see "When to Stop and Ask for Help")
 
 ### Step 3: Final Report
+
 When ALL tasks complete:
+
 - Show summary of what was implemented
 - Show final verification output (tests passing)
 - Say: "All tasks complete, tests passing."
@@ -44,15 +52,17 @@ When ALL tasks complete:
 ## Output
 
 **When all tasks complete:**
+
 - All plan tasks executed
 - All tests passing
 - Report: "All tasks complete, tests passing."
 
-The workflow orchestrator handles what comes next.
+If INSIDE_WORKFLOW=true then go to the next step/phase automatically as intended by the workflow. Otherwise, end here.
 
 ## When to Stop and Ask for Help
 
 **STOP executing immediately when:**
+
 - Hit a blocker mid-batch (missing dependency, test fails, instruction unclear)
 - Plan has critical gaps preventing starting
 - You don't understand an instruction
@@ -63,12 +73,14 @@ The workflow orchestrator handles what comes next.
 ## When to Revisit Earlier Steps
 
 **Return to Review (Step 1) when:**
+
 - Partner updates the plan based on your feedback
 - Fundamental approach needs rethinking
 
 **Don't force through blockers** - stop and ask.
 
 ## Remember
+
 - Review plan critically first
 - Follow plan steps exactly
 - Don't skip verifications

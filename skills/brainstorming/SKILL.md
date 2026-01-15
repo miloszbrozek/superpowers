@@ -5,6 +5,8 @@ description: "Use before any creative work - creating features, building compone
 
 # Brainstorming Ideas Into Designs
 
+> **INVOCATION REQUIRED:** This skill MUST be invoked via the Skill tool: `Skill(skill="brainstorming")`. Do NOT implement this skill's logic manually or describe its steps without first invoking it.
+
 ## Overview
 
 Turn ideas into complete design + implementation plan documents. Sequential process (analyze → design → plan) but NO interruptions until the document is complete. Questions at the end, then iterate if needed.
@@ -29,21 +31,27 @@ Turn ideas into complete design + implementation plan documents. Sequential proc
 # [Feature] Design
 
 ## Goal
+
 [What we're building and why]
 
 ## Approach
+
 [Your recommended approach with reasoning]
 
 ## Architecture
+
 [Components, data flow, integration points]
 
 ## Implementation Notes
+
 [Key files to modify, patterns to follow]
 
 ## Testing Strategy
+
 [How to verify it works]
 
 ## Open Questions
+
 [Things you're uncertain about - these become your questions at the end]
 ```
 
@@ -61,11 +69,13 @@ Turn ideas into complete design + implementation plan documents. Sequential proc
 ### Task 1: [First Component]
 
 **Files:**
+
 - Create: `exact/path/to/file.py`
 - Modify: `exact/path/to/existing.py:123-145`
 - Test: `tests/exact/path/to/test.py`
 
 **Steps:**
+
 1. Write failing test for [specific behavior]
 2. Run test to verify it fails
 3. Implement minimal code to pass
@@ -73,9 +83,11 @@ Turn ideas into complete design + implementation plan documents. Sequential proc
 5. Commit: `git commit -m "feat: add [component]"`
 
 ### Task 2: [Second Component]
+
 [Same structure...]
 
 ### Task N: [Final Integration/Cleanup]
+
 [Same structure...]
 ```
 
@@ -102,6 +114,7 @@ Options:
 ```
 
 **Open the document in VSCode:**
+
 ```bash
 code <absolute-path>/docs/plans/YYYY-MM-DD-<topic>-design.md
 ```
@@ -111,6 +124,7 @@ code <absolute-path>/docs/plans/YYYY-MM-DD-<topic>-design.md
 ### Step 5: Iterate or Finalize
 
 Based on response:
+
 - **"go"** → Commit doc, proceed to next workflow phase
 - **Answers provided** → Re-run Steps 2-4 (update design AND plan based on answers, show updated doc, ask if more questions)
 - **"edit"** → Wait for user to edit, then re-read doc and proceed
@@ -120,14 +134,16 @@ Based on response:
 ## Output
 
 **Required deliverable:**
+
 - Design + implementation plan at `docs/plans/YYYY-MM-DD-<topic>-design.md`
 - Committed to git
 
-**When done:** Report the document path. The workflow orchestrator handles what comes next.
+**When done:** Report the document path. If INSIDE_WORKFLOW=true then go to the next step/phase automatically as intended by the workflow. Otherwise, end here.
 
 ## Implementation Plan Guidelines
 
 Each task should be bite-sized (2-5 minutes):
+
 - Exact file paths always
 - Complete code snippets (not "add validation")
 - Exact test commands with expected output
@@ -144,10 +160,10 @@ Each task should be bite-sized (2-5 minutes):
 
 ## Anti-Patterns
 
-| Old Way (don't do) | New Way |
-|-------------------|---------|
-| "What's the scope?" | Analyze codebase, propose scope |
-| "Should we use X or Y?" | Pick one, explain why, add to Open Questions |
-| "Here's the design, ok?" then "Here's the plan, ok?" | Write both, ONE checkpoint at end |
-| Ask question, wait, continue | Collect ALL questions, ask once |
-| Update only design on feedback | Update BOTH design and plan |
+| Old Way (don't do)                                   | New Way                                      |
+| ---------------------------------------------------- | -------------------------------------------- |
+| "What's the scope?"                                  | Analyze codebase, propose scope              |
+| "Should we use X or Y?"                              | Pick one, explain why, add to Open Questions |
+| "Here's the design, ok?" then "Here's the plan, ok?" | Write both, ONE checkpoint at end            |
+| Ask question, wait, continue                         | Collect ALL questions, ask once              |
+| Update only design on feedback                       | Update BOTH design and plan                  |
