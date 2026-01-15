@@ -5,6 +5,8 @@ description: Use when starting feature work that needs isolation from current wo
 
 # Using Git Worktrees
 
+> **INVOCATION REQUIRED:** This skill MUST be invoked via the Skill tool: `Skill(skill="using-git-worktrees")`. Do NOT implement this skill's logic manually or describe its steps without first invoking it.
+
 ## Overview
 
 Git worktrees create isolated workspaces sharing the same repository, allowing work on multiple branches simultaneously without switching.
@@ -39,6 +41,7 @@ grep -i "worktree.*director" CLAUDE.md 2>/dev/null
 If no directory exists and no CLAUDE.md preference, use `worktrees/` (project-local).
 
 For global location preference, user can specify in CLAUDE.md:
+
 ```
 Worktree directory: ~/.config/superpowers/worktrees/
 ```
@@ -57,6 +60,7 @@ git check-ignore -q worktrees 2>/dev/null
 **If NOT ignored:**
 
 Per Jesse's rule "Fix broken things immediately":
+
 1. Add appropriate line to .gitignore
 2. Commit the change
 3. Proceed with worktree creation
@@ -115,6 +119,7 @@ fi
 ```
 
 **Why symlink these files:**
+
 - `.venv` - Saves 5-10GB disk space and minutes of install time per worktree
 - `.env` - API keys and credentials needed to run app/tests
 
@@ -168,15 +173,15 @@ Ready to implement <feature-name>
 
 ## Quick Reference
 
-| Situation | Action |
-|-----------|--------|
-| `worktrees/` exists | Use it (verify ignored) |
-| No directory exists | Check CLAUDE.md → default to `worktrees/` |
-| Directory not ignored | Add `worktrees/` to .gitignore + commit |
-| `.env` exists in main | Symlink it |
-| `.venv` exists in main | Symlink it, skip Python install |
-| Tests fail during baseline | Report failures + ask |
-| No package.json/Cargo.toml | Skip dependency install |
+| Situation                  | Action                                    |
+| -------------------------- | ----------------------------------------- |
+| `worktrees/` exists        | Use it (verify ignored)                   |
+| No directory exists        | Check CLAUDE.md → default to `worktrees/` |
+| Directory not ignored      | Add `worktrees/` to .gitignore + commit   |
+| `.env` exists in main      | Symlink it                                |
+| `.venv` exists in main     | Symlink it, skip Python install           |
+| Tests fail during baseline | Report failures + ask                     |
+| No package.json/Cargo.toml | Skip dependency install                   |
 
 ## Common Mistakes
 
@@ -222,6 +227,7 @@ Ready to implement auth feature
 ## Red Flags
 
 **Never:**
+
 - Create worktree without verifying it's ignored (project-local)
 - Skip baseline test verification
 - Proceed with failing tests without asking
@@ -229,6 +235,7 @@ Ready to implement auth feature
 - Skip CLAUDE.md check
 
 **Always:**
+
 - Follow directory priority: existing > CLAUDE.md > ask
 - Verify directory is ignored for project-local
 - Auto-detect and run project setup
@@ -239,10 +246,11 @@ Ready to implement auth feature
 **After completing this skill, you are in the worktree directory.** All subsequent work happens there.
 
 Report:
+
 - Worktree path (full absolute path)
 - Symlinked files (if any): .env, .venv
 - Test results (N passing, 0 failures)
 - Ready status
 - Confirm: "Working directory is now `<path>`"
 
-The workflow orchestrator handles what comes next.
+If INSIDE_WORKFLOW=true then go to the next step/phase automatically as intended by the workflow. Otherwise, end here.

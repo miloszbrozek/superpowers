@@ -5,6 +5,8 @@ description: Use when implementation is complete, all tests pass, and you need t
 
 # Finishing a Development Branch
 
+> **INVOCATION REQUIRED:** This skill MUST be invoked via the Skill tool: `Skill(skill="finishing-a-development-branch")`. Do NOT implement this skill's logic manually or present your own options. The skill defines exactly 5 options including "Show diff" with `claude-diff` - you will miss these if you don't invoke the skill properly.
+
 ## Overview
 
 Guide completion of development work by presenting clear options and handling chosen workflow.
@@ -219,4 +221,4 @@ git worktree remove <worktree-path>
 
 Report which option was executed and the result (merged, PR URL, kept, discarded).
 
-The workflow orchestrator handles what comes next.
+If INSIDE_WORKFLOW=true then go to the next step/phase automatically as intended by the workflow. Otherwise, end here.

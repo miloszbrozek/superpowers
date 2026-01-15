@@ -7,6 +7,9 @@ disable-model-invocation: true
 
 This workflow orchestrates the complete feature development process. Each phase has a specific skill and required output. **Minimize user interruptions - only stop when truly needed.**
 
+Remember, set these varaibles at the start of the workflow:
+INSIDE_WORKFLOW: "true"
+
 ## Workflow Overview
 
 ```
@@ -24,12 +27,14 @@ Phase 5: Completion     → finishing-branch        → merged/PR/kept
 **Skill:** `superpowers:using-git-worktrees`
 
 **Process:**
-1. Invoke the using-git-worktrees skill
-2. Create isolated worktree for this feature
+
+1. **Use the Skill tool:** `Skill(skill="using-git-worktrees")` - this loads the skill instructions
+2. Follow the loaded skill instructions to create isolated worktree
 3. Run project setup and verify tests pass
 4. **CRITICAL: Change working directory to the worktree**
 
 **Required output:**
+
 - [ ] Worktree created at reported path
 - [ ] Dependencies installed
 - [ ] Baseline tests passing
@@ -46,15 +51,18 @@ Phase 5: Completion     → finishing-branch        → merged/PR/kept
 **Skill:** `superpowers:brainstorming`
 
 **Process:**
-1. Invoke the brainstorming skill
-2. Create design document WITH implementation plan (see skill for format)
+
+1. **Use the Skill tool:** `Skill(skill="brainstorming")` - this loads the skill instructions
+2. Follow the loaded skill to create design document WITH implementation plan
 3. Save to `docs/plans/YYYY-MM-DD-<topic>-design.md` (inside worktree)
 
 **Required output:**
+
 - [ ] Design + implementation plan document
 - [ ] Document committed to git
 
 **Checkpoint:** The brainstorming skill has ONE checkpoint with options:
+
 - "go" → Automatically proceed to Phase 3
 - Answer questions → Update doc, then proceed
 - "edit" → Wait for user edit, then proceed
@@ -68,11 +76,13 @@ Phase 5: Completion     → finishing-branch        → merged/PR/kept
 **Skill:** `superpowers:executing-plans`
 
 **Process:**
-1. Invoke the executing-plans skill
-2. Execute all tasks without interruption
+
+1. **Use the Skill tool:** `Skill(skill="executing-plans")` - this loads the skill instructions
+2. Follow the loaded skill to execute all tasks without interruption
 3. Run verifications as specified in plan
 
 **Required output:**
+
 - [ ] All plan tasks completed
 - [ ] All tests passing
 
@@ -85,8 +95,9 @@ Phase 5: Completion     → finishing-branch        → merged/PR/kept
 **Skill:** `superpowers:manual-testing`
 
 **Process:**
-1. Invoke the manual-testing skill
-2. Identify how to run the project (check README, package.json, etc.)
+
+1. **Use the Skill tool:** `Skill(skill="manual-testing")` - this loads the skill instructions
+2. Follow the loaded skill to identify how to run the project
 3. Start the project
 4. Manually verify the implemented feature:
    - **Web app:** Use browser (MCP chrome-devtools) - navigate, click, fill forms, take screenshots
@@ -95,6 +106,7 @@ Phase 5: Completion     → finishing-branch        → merged/PR/kept
 5. Document results with evidence (screenshots/output)
 
 **Required output:**
+
 - [ ] Project running
 - [ ] Feature manually tested
 - [ ] Evidence collected (screenshots for web, output for CLI)
@@ -111,13 +123,14 @@ Phase 5: Completion     → finishing-branch        → merged/PR/kept
 **Skill:** `superpowers:finishing-a-development-branch`
 
 **Process:**
-1. Invoke the finishing-a-development-branch skill
-2. Verify tests pass on final code
-3. Present 4 options to user
+
+1. **Use the Skill tool:** `Skill(skill="finishing-a-development-branch")` - this loads the skill instructions
+2. Follow the loaded skill to verify tests and present 5 options to user
 4. Execute chosen option
 5. Clean up worktree if applicable
 
 **Required output:**
+
 - [ ] Tests verified passing
 - [ ] User chose: merge locally / create PR / keep as-is / discard
 - [ ] Choice executed
@@ -129,13 +142,13 @@ Phase 5: Completion     → finishing-branch        → merged/PR/kept
 
 ## Quick Reference
 
-| Phase | Skill | Output | User Interaction |
-|-------|-------|--------|------------------|
-| 1. Setup | using-git-worktrees | worktree | None |
-| 2. Design | brainstorming | design + plan | Questions (if any) + "go" |
-| 3. Implementation | executing-plans | code + tests | Only on blockers |
-| 4. Manual Testing | manual-testing | verified feature | Only if issues found |
-| 5. Completion | finishing-branch | merged/PR | Choose finish option |
+| Phase             | Skill               | Output           | User Interaction          |
+| ----------------- | ------------------- | ---------------- | ------------------------- |
+| 1. Setup          | using-git-worktrees | worktree         | None                      |
+| 2. Design         | brainstorming       | design + plan    | Questions (if any) + "go" |
+| 3. Implementation | executing-plans     | code + tests     | Only on blockers          |
+| 4. Manual Testing | manual-testing      | verified feature | Only if issues found      |
+| 5. Completion     | finishing-branch    | merged/PR        | Choose finish option      |
 
 ## Rules
 
@@ -153,22 +166,44 @@ Phase 5: Completion     → finishing-branch        → merged/PR/kept
 
 **Red Flags - you're skipping the workflow:**
 
-| Thought | Reality |
-|---------|---------|
-| "Worktree is overkill for this" | Phase 1 is not optional. Isolation prevents mess. |
-| "Design is clear from discussion" | Write the document. Phase 2 output is a file. |
-| "Let me just start coding" | No code before Phase 3. |
-| "Tests pass, let's merge" | Phase 4 first. Manual testing is required. |
-| "Manual testing is unnecessary" | Users interact manually. Verify it works for them. |
-| "I'll document later" | Documents are checkpoints, not afterthoughts. |
+| Thought                           | Reality                                            |
+| --------------------------------- | -------------------------------------------------- |
+| "Worktree is overkill for this"   | Phase 1 is not optional. Isolation prevents mess.  |
+| "Design is clear from discussion" | Write the document. Phase 2 output is a file.      |
+| "Let me just start coding"        | No code before Phase 3.                            |
+| "Tests pass, let's merge"         | Phase 4 first. Manual testing is required.         |
+| "Manual testing is unnecessary"   | Users interact manually. Verify it works for them. |
+| "I'll document later"             | Documents are checkpoints, not afterthoughts.      |
 
 ## Starting the Workflow
 
 Create TodoWrite with these items:
+
 - [ ] Phase 1: Setup (using-git-worktrees)
 - [ ] Phase 2: Design + Planning (brainstorming)
 - [ ] Phase 3: Implementation (executing-plans)
 - [ ] Phase 4: Manual Testing (manual-testing)
 - [ ] Phase 5: Completion (finishing-branch)
 
-Then invoke `superpowers:using-git-worktrees` to begin Phase 1.
+Then **use the Skill tool**: `Skill(skill="using-git-worktrees")` to begin Phase 1.
+
+---
+
+## CRITICAL: How to Invoke Skills
+
+**You MUST use the Skill tool to invoke skills.** Do NOT:
+- Describe the skill's options yourself
+- Implement the skill logic manually
+- Say "I'm using the X skill" without actually calling the Skill tool
+
+**Correct way:**
+```
+<tool_use>
+<name>Skill</name>
+<input>{"skill": "using-git-worktrees"}</input>
+</tool_use>
+```
+
+The Skill tool loads the skill's instructions into your context. Without it, you're just guessing what the skill does.
+
+**Why this matters:** In a recent session, Claude announced "Starting Phase 5 (finishing-a-development-branch)" but then presented 4 options instead of the required 5, and missed the "Show diff" option entirely because the skill was never actually loaded.
