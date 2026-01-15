@@ -100,5 +100,5 @@ git commit -m "feat: add specific feature"
 - Plan document at `docs/plans/YYYY-MM-DD-<feature-name>.md`
 - Commit the document to git
 
-**When done:** Report the document path. The workflow orchestrator handles what comes next.
+**When done:** Report the document path. If INSIDE_WORKFLOW=true then go to the next step/phase automatically as intended by the workflow. Otherwise, end here.
 ```
